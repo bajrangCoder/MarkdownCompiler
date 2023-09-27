@@ -1,0 +1,35 @@
+{
+  "name": "MarkdownCompiler",
+  "version": "1.0.3",
+  "description": "Template for Acode plugin(Typescript)",
+  "main": "dist/main.js",
+  "repository": "https://github.com/bajrangCoder/AcodeTSTemplate.git",
+  "author": "Raunak Raj",
+  "license": "MIT",
+  "dependencies": {
+    "@types/dompurify": "^3.0.2",
+    "dompurify": "^3.0.5",
+    "esbuild-sass-plugin": "^2.15.0",
+    "highlight.js": "^11.8.0",
+    "html-tag-js": "^1.1.22",
+    "marked": "^8.0.0",
+    "marked-highlight": "^2.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.9",
+    "esbuild": "^0.19.3",
+    "jszip": "^3.10.1",
+    "typescript": "^5.1.6"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "build-ts": "tsc && node build.mjs"
+  },
+  "browserslist": [
+    "> 0.25%, not dead"
+  ],
+  "resolutions": {
+    "terser": ">=5.14.2 ",
+    "glob-parent": ">=5.1.2"
+  }
+}
