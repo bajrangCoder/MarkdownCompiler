@@ -4,7 +4,6 @@ import markdownit from "markdown-it";
 import MarkdownItGitHubAlerts from "markdown-it-github-alerts";
 import anchor from "markdown-it-anchor";
 import hljs from "highlight.js";
-import taskLists from "markdown-it-task-lists";
 const fsOperation = acode.require("fsOperation");
 
 class MarkdownCompiler {
@@ -36,9 +35,9 @@ class MarkdownCompiler {
                     const currentFilePath = editorManager.activeFile.location || '';
                     const currentDir = currentFilePath.substring(0, currentFilePath.lastIndexOf('/') + 1);
                     // Generate a placeholder URL
-                    const placeholderUrl = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='; 
+                    const placeholderUrl = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
                     token.attrs[srcIndex][1] = placeholderUrl;
-        
+
                     // Resolve the image path and replace the placeholder asynchronously
                     this.resolveImagePath(src, currentDir).then((resolvedUrl) => {
                         const imgElement = document.querySelector(`img[src="${placeholderUrl}"]`);
@@ -63,7 +62,7 @@ class MarkdownCompiler {
                         .trim()
                         .toLowerCase()
                         .replace(/[^a-z0-9]+/g, "-"),
-            }).use(taskLists);
+            }).use(require("markdown-it-task-lists")).use(require('markdown-it-footnote'));
 
         this.resolveImagePath = this.resolveImagePath.bind(this);
     }
@@ -81,12 +80,42 @@ class MarkdownCompiler {
         const absolutePath = `${basePath}${relativePath}`;
         return await this.fileToDataUrl(absolutePath)
     }
-    
+
     async fileToDataUrl(file) {
-    	const fs = fsOperation(file);
-    	const fileInfo = await fs.stat();
-    	const binData = await fs.readFile();
-    	return URL.createObjectURL(new Blob([binData], { type: fileInfo.mime }));
+        const fs = fsOperation(file);
+        const fileInfo = await fs.stat();
+        const binData = await fs.readFile();
+        return URL.createObjectURL(new Blob([binData], { type: fileInfo.mime }));
+    }
+
+    addCopyButtons() {
+        const codeBlocks = this.$mainPreviewBox.querySelectorAll('pre');
+
+        codeBlocks.forEach(pre => {
+            pre.style.position = 'relative';
+
+            // Create copy button
+            const copyButton = document.createElement('button');
+            copyButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="check-icon">
+                <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+        `;
+            copyButton.className = 'copy-button';
+            pre.appendChild(copyButton);
+
+            // Add click handler
+            copyButton.addEventListener('click', async () => {
+                const code = pre.querySelector('code').textContent;
+                await navigator.clipboard.writeText(code);
+
+                copyButton.classList.add('copied');
+                setTimeout(() => {
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            });
+        });
     }
 
     checkRunnable() {
@@ -109,7 +138,7 @@ class MarkdownCompiler {
             const parsedContent = this.mdit.render(editorManager.editor.getValue() || "");
 
             this.$mainPreviewBox.innerHTML = parsedContent;
-
+            this.addCopyButtons()
             // Handle anchor links
             this.$mainPreviewBox.querySelectorAll("a[href^='#']").forEach(link => {
                 const originalHref = link.getAttribute('href');
