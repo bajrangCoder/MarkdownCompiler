@@ -1,29 +1,29 @@
 {
   "name": "MarkdownCompiler",
-  "version": "1.0.3",
-  "description": "Template for Acode plugin(Typescript)",
+  "version": "1.0.4",
+  "description": "Markdown Previewer plugin",
   "main": "dist/main.js",
   "repository": "https://github.com/bajrangCoder/AcodeTSTemplate.git",
   "author": "Raunak Raj",
   "license": "MIT",
   "dependencies": {
-    "@types/dompurify": "^3.0.2",
-    "dompurify": "^3.0.5",
-    "esbuild-sass-plugin": "^2.15.0",
-    "highlight.js": "^11.8.0",
-    "html-tag-js": "^1.1.22",
-    "marked": "^8.0.0",
-    "marked-highlight": "^2.0.5"
+    "highlight.js": "^11.10.0",
+    "html-tag-js": "^1.8.1",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "markdown-it-github-alerts": "^0.3.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "postcss": "^8.4.47"
   },
   "devDependencies": {
-    "@types/node": "^20.5.9",
-    "esbuild": "^0.19.3",
-    "jszip": "^3.10.1",
-    "typescript": "^5.1.6"
+    "@types/ace": "^0.0.52",
+    "@types/node": "^20.17.1",
+    "esbuild": "^0.24.0",
+    "esbuild-sass-plugin": "^3.3.1",
+    "jszip": "^3.10.1"
   },
   "scripts": {
-    "build": "node build.mjs",
-    "build-ts": "tsc && node build.mjs"
+    "build": "node build.mjs"
   },
   "browserslist": [
     "> 0.25%, not dead"

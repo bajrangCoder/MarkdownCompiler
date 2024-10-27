@@ -1,22 +1,19 @@
 import * as esbuild from "esbuild";
-import {sassPlugin} from 'esbuild-sass-plugin';
 import { exec } from 'child_process';
+import {sassPlugin} from 'esbuild-sass-plugin';
 
 let result = await esbuild.build({
-    entryPoints: ["./src/main.ts"],
+    entryPoints: ["src/main.js"],
     bundle: true,
     loader: {
-        ".ts": "ts"
+        ".js": "js"
     },
-    splitting: true,
-    format: "esm",
     minify: true,
     logLevel: 'info',
     color: true,
     outdir: "dist",
     plugins: [sassPlugin()]
 });
-console.log(result);
 
 exec("node .vscode/pack-zip.js", (err, stdout, stderr) => {
     if (err) {

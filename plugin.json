@@ -1,13 +1,12 @@
 {
   "id": "bajrangcoder.markdown",
-  "name": "MarkdownCompiler",
+  "name": "MarkdownPreviewer",
   "main": "dist/main.js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "readme": "readme.md",
   "icon": "icon.png",
   "files": [],
   "minVersionCode": 290,
-  "price": 0,
   "author": {
     "name": "Raunak Raj",
     "email": "bajrangcoders@gmail.com",
