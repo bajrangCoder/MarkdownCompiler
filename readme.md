@@ -62,10 +62,6 @@ This plugin try to bring github markdown styling to Acode.
 
 **Make sure to leave a 🌟 [here](https://github.com/bajrangCoder/MarkdownCompiler)**
 
-```js
-console.log('hi')
-```
-
 
 Usage 🛠️
 --------
