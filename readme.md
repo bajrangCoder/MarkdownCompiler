@@ -7,7 +7,15 @@
     <br>
     <details>
         <summary>
-            <code><strong>v1.0.4</strong></code>
+            <code><strong>v1.0.6</strong></code>
+        </summary>
+        <ul>
+            <li>fixed checkbox styling issue</li>
+        </ul>
+    </details>
+    <details>
+        <summary>
+            <code><strong>v1.0.4 & v1.0.5</strong></code>
         </summary>
         <ul>
             <li>Improved styling</li>

@@ -814,6 +814,69 @@
     
     .task-list-item {
         list-style-type: none;
+        
+        label {
+            font-weight: 400;
+        }
+        
+        &.enabled label {
+            cursor: pointer;
+        }
+        
+        &+.task-list-item {
+            margin-top: 0.25rem;
+        }
+        
+        .handle {
+            display: none;
+        }
+        
+        &-checkbox {
+            margin: 0 0.2em 0.25em -1.4em;
+            vertical-align: middle;
+            appearance: none;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            
+            &:checked {
+                background-color: var(--border-color);
+                border-color: var(--border-color);
+                position: relative;
+                
+                &::after {
+                    content: '';
+                    display: block;
+                    width: 0.3rem;
+                    height: 0.6rem;
+                    border: solid var(--primary-text-color);
+                    border-width: 0 2px 2px 0;
+                    transform: rotate(45deg);
+                    position: absolute;
+                    left: 2px;
+                }
+            }
+        }
+    }
+    
+    
+    ul:dir(rtl) .task-list-item-checkbox,
+    ol:dir(rtl) .task-list-item-checkbox {
+        margin: 0 -1.6em 0.25em 0.2em;
+    }
+    
+    .contains-task-list {
+        
+        &:hover .task-list-item-convert-container,
+        &:focus-within .task-list-item-convert-container {
+            display: block;
+            width: auto;
+            height: 24px;
+            overflow: visible;
+            clip: auto;
+        }
     }
 }
 
