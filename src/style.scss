@@ -1,3 +1,5 @@
+@forward "highlight.js/scss/github-dark.scss";
+
 @media (prefers-color-scheme: dark) {
     :root {
         --color-note: #2f81f7;
