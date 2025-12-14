@@ -8,22 +8,28 @@ const fsOperation = acode.require("fsOperation");
 
 class MarkdownCompiler {
     constructor() {
-        const defaultImageRenderer = markdownit().renderer.rules.image;
-        this.mdit = markdownit({
+        this.mdit = markdownit();
+        const defaultImageRenderer = this.mdit.renderer.rules.image;
+
+        Object.assign(this.mdit.options, {
             html: true,
             linkify: true,
-            highlight: function (str, lang) {
+            highlight: (function (str, lang) {
+                let highlighted;
                 if (lang && hljs.getLanguage(lang)) {
                     try {
-                        return '<pre><code class="hljs">' +
-                            hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-                            '</code></pre>';
-                    } catch (__) { }
+                        highlighted = hljs.highlight(str, { language: lang, ignoreIllegals: true }).value;
+                    } catch { }
                 }
 
-                return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
-            }
-        });
+                if (!highlighted) {
+                    highlighted = this.mdit.utils.escapeHtml(str);
+                }
+
+                return '<pre><code class="hljs">' + highlighted + '</code></pre>';
+            }).bind(this)
+        })
+
         // Custom image renderer
         this.mdit.renderer.rules.image = (tokens, idx, options, env, self) => {
             const token = tokens[idx];
@@ -186,10 +192,6 @@ class MarkdownCompiler {
         this.$style = tag("link", {
             rel: "stylesheet",
             href: this.baseUrl + "main.css"
-        });
-        this.hljsStyle = tag("link", {
-            rel: "stylesheet",
-            href: this.baseUrl + "github-dark.css"
         });
 
         this.$runBtn = document.createElement("span");
